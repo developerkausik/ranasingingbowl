@@ -1,0 +1,40 @@
+$(function() {
+
+   //Function to animate slider captions
+   function doAnimations(elems) {
+
+     var animEndEv = 'webkitAnimationEnd animationend';
+
+     elems.each(function() {
+       var $this = $(this),
+         $animationType = $this.data('animation');
+       $this.addClass($animationType).one(animEndEv, function() {
+         $this.removeClass($animationType);
+       });
+     });
+   }
+
+   //Variables on page load
+   var $myCarousel = $('#carousel-animated'),
+     $firstAnimatingElems = $myCarousel.find('.carousel-item:first').find("[data-animation ^= 'animated']");
+
+   //Initialize carousel
+   $myCarousel.carousel();
+
+   //Animate captions in first slide on page load
+   doAnimations($firstAnimatingElems);
+
+   //Pause carousel
+   $myCarousel.carousel('pause');
+
+   //Other slides to be animated on carousel slide event
+   $myCarousel.on('slide.bs.carousel', function(e) {
+     var $animatingElems = $(e.relatedTarget).find("[data-animation ^= 'animated']");
+     doAnimations($animatingElems);
+   });
+   $('#carousel-animated').carousel({
+     interval: 3000,
+     pause: "false"
+   });
+
+ });

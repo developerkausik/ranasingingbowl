@@ -1,0 +1,5 @@
+@include('admin/layout/header')
+@include('admin/layout/left_menu')
+@yield('content')
+@include('admin/layout/footer')
+@yield('scriptContent')
